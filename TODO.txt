@@ -1,0 +1,8 @@
+Nos google Python classes fazer o def main(): para poder executar via linha de comando informações em http://code.google.com/intl/pt-BR/edu/languages/google-python-class/introduction.html
+
+No exercício 3 parte 3 falta comparar a performance
+
+No exercício 4 parte 3 falta eliminar as linhas vazias.
+
+No capitulo 4 exercício 2 é pra fazer sobrecarga de método?
+
