@@ -15,6 +15,7 @@ retornar valor do lado e calcular área.
 
 >>> quadrado.area()
 49
+
 """
 
 class Quadrado(object):
