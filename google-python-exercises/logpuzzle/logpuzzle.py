@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# _*_ encoding: utf8 _*_
 # Copyright 2010 Google Inc.
 # Licensed under the Apache License, Version 2.0
 # http://www.apache.org/licenses/LICENSE-2.0
@@ -25,6 +26,33 @@ def read_urls(filename):
   Screens out duplicate urls and returns the urls sorted into
   increasing order."""
   # +++your code here+++
+  #Extraindo o hostname
+  underline = filename.find('_')
+  hostname = filename[underline + 1:]
+
+  file = open(filename)
+  
+  url_dict = {}
+
+  for line in file:
+	# Apos o GET casa com os caracteres sem espaço
+    match = re.search(r'"GET (\S+)', line)
+		
+    if match:
+	  # Os caracteres sem espaço	
+      path = match.group(1)
+	  
+      if 'puzzle' in path:
+        # Armazena na chave do dicionario
+		url_dict['http://' + hostname + path] = 1
+	
+	
+  return sorted(url_dict.keys())
+
+  
+  
+# recuperando as urls ordenadas
+print read_urls('animal_code.google.com')
   
 
 def download_images(img_urls, dest_dir):
