@@ -39,8 +39,6 @@ print get_special_paths('./')
 
 
 
-# @param paths lista
-# @param dir string
 def copy_to(paths, dir):
 
   if not os.path.exists(dir):
@@ -57,7 +55,7 @@ copy_to(get_special_paths('./'),'tmp')
 def zip_to(paths, zipfile):
   # comando para criar o zip
   cmd = 'zip -j ' + zipfile + ' ' + ' '.join(paths)
-  print "Command I'm going to do:" + cmd
+  print "Zipando com:" + cmd
   (status, output) = commands.getstatusoutput(cmd)
 
   if status:
