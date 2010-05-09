@@ -19,6 +19,19 @@ Here's what a puzzle url looks like:
 10.254.254.28 - - [06/Aug/2007:00:13:48 -0700] "GET /~foo/puzzle-bar-aaab.jpg HTTP/1.0" 302 528 "-" "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070725 Firefox/2.0.0.6"
 """
 
+"""
+Utilizada para ordenar o puzzle do place
+sorted aceita paramêtros extras em http://docs.python.org/library/functions.html#sorted
+se casar com a expressão ordenara pelo segundo paramêtro senão retorna a url normal
+assim funcionando no animal e no place
+"""
+def ordena_place(url):
+  match = re.search(r'-(\w+)-(\w+)\.\w+', url)
+  if match:
+    return match.group(2)
+  else:
+    return url
+
 
 def read_urls(filename):
   """Returns a list of the puzzle urls from the given log file,
@@ -46,13 +59,10 @@ def read_urls(filename):
         # Armazena na chave do dicionario
 		url_dict['http://' + hostname + path] = 1
 	
-	
-  return sorted(url_dict.keys())
+  # Utilizo a função criada anteriormente para definir a ordem
+  # de ordenação da chave	
+  return sorted(url_dict.keys(), key=ordena_place)
 
-  
-  
-# recuperando as urls ordenadas
-print read_urls('animal_code.google.com')
   
 
 def download_images(img_urls, dest_dir):
@@ -64,7 +74,46 @@ def download_images(img_urls, dest_dir):
   Creates the directory if necessary.
   """
   # +++your code here+++
+  # Cria o diretorio de destino se não existir
+  if not os.path.exists(dest_dir):
+    os.makedirs(dest_dir)
+
+  # Abrindo o arquivo para escrita, path.join une os paths inteligentemente
+  # write escreve no arquivo
+  index = open(os.path.join(dest_dir, 'index.html'), 'w')
+  index.write('<html><body>\n')
   
+  # contador para dar o nome as imagens
+  i = 0
+
+  # Loop para recuperar as imagens
+  for img_url in img_urls:
+	
+	# Dando o nome as imagens
+    img_nome = 'img%d' %( i )
+
+    # Só pra ter algo na tela enquanto baixa
+    print 'Baixando...', img_url
+
+    # Baixa a imagem da url e coloca no diretorio de destino com o nome criado
+    urllib.urlretrieve(img_url, os.path.join(dest_dir, img_nome))
+
+    # Escreve no index o nome da imagem
+    index.write('<img src="%s">' % (img_nome))
+
+    # Incrementa o contador
+    i += 1
+
+  # Ao sair do for termina o HTML
+  index.write('\n</body></html>\n')
+  # Fecha o arquivo
+  index.close()
+
+# Executando
+# recuperando as urls ordenadas
+print read_urls('animal_code.google.com')
+# Baixando os arquivos
+download_images(read_urls('animal_code.google.com'), 'img')
 
 def main():
   args = sys.argv[1:]
