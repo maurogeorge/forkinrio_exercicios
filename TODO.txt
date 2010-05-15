@@ -1,5 +1,1 @@
-Nos google Python classes fazer o def main(): para poder executar via linha de comando informações em http://code.google.com/intl/pt-BR/edu/languages/google-python-class/introduction.html
-
-No exercício 3 parte 3 falta comparar a performance
-
-No exercício 4 parte 3 falta eliminar as linhas vazias.
+Fazer o exercicio 5.1 com o pickle que acho que é o ideal ao invés do XML
