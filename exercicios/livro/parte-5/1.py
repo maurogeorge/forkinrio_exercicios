@@ -7,7 +7,7 @@ devera salvar seu estado em arquivo com o método "salvar" e recarregar o estado
 um método chamado "desfazer"
 """
 
-import xml.dom.minidom
+import pickle
 
 class Animal(object):
 	
@@ -19,41 +19,47 @@ class Animal(object):
 		self.altura = altura
 		self.idade  = idade
 		
-	def salvar(self):		
-		# Cria o Documento XML
-		documento = xml.dom.minidom.Document()
+	def __repr__(self):
+		# Representação em string dos dados
+		return '%s, %s, %s, %.1f, %.1f, %d'%(self.nome, self.especie, self.genero, self.peso, self.altura, self.idade)
 		
-		# Criando os elementos
-		root = documento.createElement('Animal')
-		especie = documento.createElement(self.especie)
-		genero = documento.createElement(self.genero)
 		
-		# Definindo os atributos do gênero
-		genero.setAttribute('nome', self.nome)
-		genero.setAttribute('peso', self.peso)
-		genero.setAttribute('altura', self.altura)
-		genero.setAttribute('idade', self.idade)
-		
-		# Montando o XML
-		documento.appendChild(root)
-		root.appendChild(especie)
-		especie.appendChild(genero)
-		
-		# Cria um arquvio.xml com os dados
-		arquivo = open('arquivo.xml','w')
-		arquivo.write(documento.toprettyxml())
-		
+	def salvar(self):
+		# Adicionando os dados ao dicionário		
+		dados = {
+			'nome': self.nome,
+			'especie': self.especie,
+			'genero': self.genero,
+			'peso': self.peso,
+			'altura': self.altura,
+			'idade': self.idade
+		}
+		# Criando os arquivos com os dados		
+		pickle.dump(dados, file('dados.pkl', 'w'))
+	
 		
 	def desfazer(self):
-		documento = xml.dom.minidom.parse('arquivo.xml')	
-		print documento
+		# Recuperando os dados
+		dados = pickle.load(file('dados.pkl'))
+		
+		# Recarregando os dados
+		self.nome = dados['nome']
+		self.especie = dados['especie']
+		self.genero = dados['genero']
+		self.peso = dados['peso']
+		self.altura = dados['altura']
+		self.idade = dados['idade']
+	
 		
 		
 		
-
-cachorro = Animal('Buddy', 'Labrador', 'Disney', '20', '0.7', '5')
+		
+# executando
+cachorro = Animal('Buddy', 'Labrador', 'Disney', 20, 0.7, 5)
 cachorro.salvar()
-cachorro.desfazer()	
+cachorro.desfazer()
+print cachorro
+
 		
 		
 		

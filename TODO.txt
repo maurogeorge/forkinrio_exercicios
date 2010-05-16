@@ -1,1 +1,0 @@
-Fazer o exercicio 5.1 com o pickle que acho que é o ideal ao invés do XML
