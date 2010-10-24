@@ -6,7 +6,7 @@ com um método retorne os elementos da lista
 sem repetição
 
 >>> Lista([1,2,2,3]) - [3,4,5,6]
-[1, 2, 3, 4, 5, 6]
+[1, 2, 3, 4, 5,]
 """
 
 class Lista(list):
