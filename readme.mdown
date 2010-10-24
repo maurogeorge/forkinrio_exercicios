@@ -1,0 +1,7 @@
+# Exercícios do forkinrio de python
+
+Exercícios que realizamos no periodo do forkinrio.
+
+Nem todos os exercícios estão completos.
+
+Além de aprendermos python, utilizamos e aprendemos Git.
